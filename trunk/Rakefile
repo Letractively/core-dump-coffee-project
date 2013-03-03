@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-GoCoffee::Application.load_tasks
+CoffeShop::Application.load_tasks
