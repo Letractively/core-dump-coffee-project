@@ -1,0 +1,43 @@
+<h3 class="header-title">All Product</h3>
+<div class="popover-content">
+  <% if @newproducts %>
+  <% @newproducts.each do |new| %>
+  <div class="box-product">
+    <div class="brief">
+      <div class="thumb">
+        <%= link_to image_tag(new.imageurl, alt: new.name), :controller => "products", :action => "show", :id => new.id %>
+      </div>
+      <%= link_to truncate(new.name, :length => 40), :controller => "products", :action => "show", :id => new.id %><br/>
+    </div>
+    <div align="center">
+      <span class="label label-info price"><%= new.price %> <b><%= new.currency %></b></span><br/>
+      <button class="btn primary details" data-tooltip="sticky<%= new.id %>"><i class="icon-zoom-in"></i></button>
+      <a href="javascript:void(0)" class="btn addto" onClick="AddCart(<%= new.id %>)">Add to <i class="icon-shopping-cart"></i></a>
+    </div>
+  </div>
+  <% end %>
+  <% else %>
+  No item in database
+  <% end %>
+</div>
+<div style="clear:both;float:right"><%= will_paginate @newproducts %></div>
+
+<!--HTML for the tooltips-->
+<div id="mystickytooltip" class="stickytooltip">
+  <div style="padding:5px">
+    <% if @newproducts %>
+    <% @newproducts.each do |new| %>
+
+    <div id="sticky<%= new.id %>" class="atip">
+      <%= image_tag(new.imageurl, alt: new.name)%><br/>
+      <b><%= new.name %></b><br/>
+      <b>Price: <%= new.price %> <%= new.currency %></b>
+
+    </div>
+    <% end %>
+    <% end %>
+
+  </div>
+
+  <div class="stickystatus"></div>
+</div>

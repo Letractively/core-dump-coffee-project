@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+  <h3>Welcome to <%= @url %></h3>
+  <p>Hi <%= @user.email %>!</p> 
+  <p>
+    We have received your order on the website <%= @url %>.<br/>
+    Please confirm your order. We will contact you as soon as possible
+  </p>   
+  <p>
+    <table width="650px" style="border: 1px solid #6699CC;border-collapse: collapse;">
+      <tr>
+        <th width="350px" align="center" style="color: #003399;font-size: 14px;padding: 12px 17px;">Product Name</th>
+        <th width="125px" align="center" style="color: #003399;font-size: 14px;padding: 12px 17px;">Price</th>
+        <th width="50px" align="center" style="color: #003399;font-size: 14px;padding: 12px 17px;">Qty</th>
+        <th width="125px" align="center" style="color: #003399;font-size: 14px;padding: 12px 17px;">Total</th>
+      </tr>
+      <% @order.each do | id, quantity | %>
+      <% item = Products.find_by_id(id) %>
+      <tr>
+        <td align="left" style="color: #666699;padding: 7px 17px;border: 1px dashed #6699CC;"><%= link_to item.name, @url + "/products/" + item.id.to_s, {:style => "text-decoration:none"} %></td>
+        <td align="right" style="color: #666699;padding: 7px 17px;border: 1px dashed #6699CC;"><%= number_to_currency(item.price, :unit => "") %> <%= item.currency %></td>
+        <td align="right" style="color: #666699;padding: 7px 17px;border: 1px dashed #6699CC;"><%= quantity %><br /></td>
+        <td align="right" style="color: #666699;padding: 7px 17px;border: 1px dashed #6699CC;"><b>
+          <%= number_to_currency(quantity * item.price, :unit => "") %> YJP</b>
+        </td>
+      </tr>
+      <% if !@total %>
+      <% @total = 0 %>
+      <% end %>
+      <% @total += quantity * item.price %>
+      <% end %>
+
+      <tr>
+        <td align="right" colspan="3" style="color: #666699;padding: 7px 17px;border: 1px dashed #6699CC;"><b>Total:<b></td>
+        <td align="right" style="color: red;padding: 7px 17px;border: 1px dashed #6699CC;">
+          <b><%= number_to_currency(@total, :unit => "") %> YJP</b>
+        </td>
+      </tr>
+    </table>
+  </p>
+  <p>Thank you and have a great day!</p>
+</body>
+</html>

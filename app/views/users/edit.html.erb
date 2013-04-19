@@ -1,0 +1,25 @@
+<% provide(:title, "Edit user") %> 
+<div class="span9" style="float:right">
+  <h3 class="header-title">Edit User</h3>
+  <div class="popover-content">
+    <div class="row">
+      <div class="span6 offset3">
+        <%= form_for(@user) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+
+        <%= f.label :password_confirmation, "Confirm Password" %>
+        <%= f.password_field :password_confirmation %>
+
+        <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+        <% end %>
+        
+      </div>
+    </div> 
+  </div>
+</div>

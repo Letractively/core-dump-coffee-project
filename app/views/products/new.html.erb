@@ -1,0 +1,33 @@
+<% provide(:title, "Post Item") %> 
+<div class="span9" style="float:right">
+  <h3 class="header-title">Post items</h3>
+  <div class="popover-content">
+    <div class="row">
+      <div class="span6 offset3">
+        <%= form_for(@product, :url => url_for(:controller => 'products', :action => 'create')) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+
+        <%= f.label :Name %>
+        <%= f.text_field :name %>
+
+        <%= f.label :Categories %>
+        <%= f.select(:category_id, 
+        Categories.find(:all).collect {|p| [ p.name, p.category_id ] } ) %>
+
+        <%= f.label :Price %>
+        <%= f.text_field :price, {:style => "width:80%", :class => "number", :placeholder => "Only number"} %>
+        <select name="products[currency]" style="padding:5px; width:18%;margin-bottom:10px;">
+          <option value="YJP">YJP</option>
+        </select>
+        <%= f.label :Image, "Image (Url)" %>
+        <%= f.text_field :imageurl, {:placeholder => "Url to image"} %>
+
+        <%= f.text_area :description, "cols" => 20, "rows" => 10 %>
+
+        <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div style="clear:both"></div>
+</div>
