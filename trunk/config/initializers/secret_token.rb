@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-GoCoffee::Application.config.secret_token = '0ce938841806c654468a0156694347610a25f1bec67f9e955872f336399d6e469ca4433e09dbd51801915c746d58fe403cd57c6237744ed70ff0d4248ea45d1f'
+Venshop::Application.config.secret_token = 'ad7ae2152907d95ba44c6c9724b0328a8d19231c2e12ef00e6e13cc4cc1e27a4c6767af2c2144d0a8daa671dddf4ddb5e9c9e51436cda6ecc06df1e8fd5b32c6'

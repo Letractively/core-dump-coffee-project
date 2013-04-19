@@ -1,0 +1,26 @@
+<% provide(:title, "Checkout") %> 
+<div class="span9" style="float:right">
+  <h3 class="header-title">Checkout</h3>
+  <div class="popover-content">
+    <div class="row">
+      <div class="span6 offset3">
+        The total value of your order is: <span style="color:red"><b><%= number_to_currency(@total, :unit => "") %> YJP</b></span>
+        <%= form_for(@order, :url => url_for(:controller => 'order', :action => 'create')) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+
+        <%= f.label :Name %>
+        <%= f.text_field :name %>
+
+        <%= f.label :Phone %>
+        <%= f.text_field :phone %>
+
+        <%= f.label :Address %>
+        <%= f.text_field :address %>
+
+        <%= f.submit "Accep", class: "btn btn-large btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div style="clear:both"></div>
+</div>

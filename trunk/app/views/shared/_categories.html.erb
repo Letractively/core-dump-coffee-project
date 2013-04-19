@@ -1,0 +1,10 @@
+<aside>
+	<h3 class="header-title">Categories</h3>
+	<div class="popover-content shadow-5">
+		<ul class="list-product">
+			<% categories_menu.each do |i| %>
+			<li><%= link_to i.name, :controller => "categories", :action => "show", :id => i.id %></li>
+			<% end %>
+		</ul>
+	</div>
+</aside>
