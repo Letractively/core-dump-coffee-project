@@ -11,6 +11,10 @@ gem 'rest-open-uri'
 gem 'yaml_db'
 gem 'mail'
 
+gem 'omniauth-openid'
+gem 'omniauth-google'
+gem 'omniauth-facebook'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 group :development, :test do
