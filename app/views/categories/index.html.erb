@@ -1,4 +1,13 @@
-<% provide(:title, "Product Category") %> 
+<% provide(:title, (t 'allproduct')) %> 
+
 <div class="span9" style="float:right">
 	<%= render 'shared/allproducts' %>
+</div>
+<% flash.each do |key, value| %>
+   <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+   <% end %>
+ <div class="row-fluid">
+    <div class="span3">
+      <%= render 'shared/categories' %>
+      <%= render 'shared/newproducts_left' %>
 </div>

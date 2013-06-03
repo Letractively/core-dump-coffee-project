@@ -1,8 +1,14 @@
 class SearchController <ApplicationController
 
-	def index
-		@key = params[:keyword]
-		@result = Products.search(@key,params[:page])
-	end
 	
+	
+	def index
+		@search = Products.search do 
+			fulltext params[':keyword'] 
+		end
+		@result = @search.results 
+		@key = params[':keyword'] 
+	end
+
+
 end

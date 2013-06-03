@@ -1,19 +1,19 @@
- <% provide(:title, "Order Detail") %> 
- <div class="span9" style="float:right">
-  <h3 class="header-title">Order Detail (Name: <%= @order.name %> - Date: <%= @order.created_at.strftime("%H:%M %d-%m-%Y") %>)</h3>
+ <% provide(:title, (t 'admin.orderdetail')) %> 
+ <div class="span9">
+  <h3 class="header-title"><%=(t 'admin.orderdetail')%> - <%= @order.created_at.strftime("%H:%M %d-%m-%Y") %></h3>
   <div class="popover-content">
     <% if @detail.empty? %>
-    <p>Your Cart is empty.</p>
+    <p><%=(t 'ordercart.empty')%></p>
     <% end %>
 
     <% total = 0 %>
     <table class="table cart" id="yourcart">
       <tr>
         <th></th>
-        <th>Item</th>
-        <th>Price</th>
-        <th>Qty</th>
-        <th>Total</th>
+        <th><%=(t 'name')%></th>
+        <th><%=(t 'price')%></th>
+        <th><%=(t 'ordercart.quantity')%></th>
+        <th><%=(t 'ordercart.total')%></th>
       </tr>
 
       <% @detail.each do | rec | %>
@@ -28,7 +28,7 @@
         <td><%= number_to_currency(item.price, :unit => "") %> <%= item.currency %></td>
         <td><%= rec.qrt %><br /></td>
         <td><b>
-          <%= number_to_currency(rec.qrt * item.price, :unit => "") %> YJP</b>
+          <%= number_to_currency(rec.qrt * item.price, :unit => "") %> $</b>
         </td>
       </tr>
       <% total += rec.qrt * item.price %>
@@ -36,14 +36,14 @@
 
       <tr>
         <td colspan="4">
-          <div class="total">Total:</div>
+          <div class="total"><%=(t 'ordercart.total')%>:</div>
         </td>
         <td>
-          <div class="price"><%= number_to_currency(total, :unit => "") %> YJP</div>
+          <div class="price"><%= number_to_currency(total, :unit => "") %> $</div>
         </td>
       </tr>
     </table>
-<%= link_to "Back", "/order",{:class => "btn"} %>
+<%= link_to (t 'btnallorder'), "/order",{:class => "btn btn-info"} %>
   </div>
   <div style="clear:both"></div>
 </div>

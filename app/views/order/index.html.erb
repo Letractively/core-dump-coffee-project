@@ -1,15 +1,15 @@
-<% provide(:title, "Your Order") %> 
-<div class="span9" style="float:right">
-  <h3 class="header-title">Your Order</h3>
+<% provide(:title, (t 'myorder')) %> 
+<div class="span9">
+  <h3 class="header-title"><%=(t 'myorder')%></h3>
   <div class="popover-content">
             <table class="table table-hover">
    <tr>
-    <th>Code</th>
-    <th>Name</th>
-    <th>Phone</th>
-    <th>Date</th>
-    <th>Total</th>
-    <th></th>
+    <th><%=(t 'admin.code')%></th>
+    <th><%=(t 'name')%></th>
+    <th><%=(t 'phonenumber')%></th>
+    <th><%=(t 'date')%></th>
+    <th><%=(t 'ordercart.total')%></th>
+    <th><%=(t 'detail')%></th>
   </tr>
   <% @order.each do |item| %>
   <tr>
@@ -17,8 +17,8 @@
     <td><%= item.name %></td>
     <td><%= item.phone %></td>
     <td><%= item.created_at.strftime("%H:%M %d-%m-%Y") %></td>
-    <td><%= number_to_currency(item.total, :unit => "") %> YJP</td>
-    <td><%= link_to "View Detail", :controller => "order", :action => "show", :id => item.id %></td>
+    <td><%= number_to_currency(item.total, :unit => "") %> $</td>
+    <td><%= link_to (t 'clicktosee'), :controller => "order", :action => "show", :id => item.id %></td>
   </tr>
   <% end %>
           </table>

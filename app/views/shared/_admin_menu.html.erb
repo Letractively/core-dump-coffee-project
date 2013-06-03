@@ -1,0 +1,16 @@
+
+<ul class="nav nav-pills">
+  <li <% if (controller.action_name == "index"|| controller.action_name[0,7] == "product") %> class="active" <% end %>>
+    <a href="/admin/index"><b><%=(t "product")%></b></a>
+  </li>
+  <li <% if (controller.action_name == "categories" || controller.action_name[0,8] == "category") %> class="active" <% end %>>
+    <a href="/admin/categories"><b><%=(t "categories")%></b></a>
+  </li>
+  <li <% if (controller.action_name[0,4] == "user") %> class="active" <% end %>>
+    <a href="/admin/users"><b><%=(t "user")%></b></a>
+  </li>
+  <li <% if (controller.action_name[0,6] == "report") %> class="active" <% end %>>
+    <a href="/admin/report"><b><%=(t "report")%></b></a>
+  </li>
+</ul>
+

@@ -1,0 +1,26 @@
+<% provide(:title, (t 'report')) %> 
+<article>
+    <%= render 'shared/admin_menu' %>
+    <h2><%=(t "admin.reporttitle")%></h2>
+    <form id='report' action='/admin/report_month' method='GET'>
+      <select name="year" id="year" class="span2">
+          <option value=""><%=(t 'admin.chooseyear')%></option>
+        <%
+        present = Time.new.year
+        (2013..(present+10)).each do |e|
+          %>
+          <option value="<%=e%>" <% if @year.to_s == e.to_s %>selected="selected"<% end %>> <%=e%>
+          <% end %>
+        </select>
+        <select name="month" id="month" class="span2">
+          <option value=""><%= (t 'admin.choosemonth') %></option>
+          <% (1..12).each do |e| %>
+          <option value="<%=e%>" <% if @month.to_s == e.to_s %>selected="selected"<% end %>>
+              <%=e%>
+          </option>
+          <% end %>
+        </select>
+        <br/>
+        <button class="btn btn-primary"><%= (t 'admin.btnshow') %></button>
+      </form>
+</article>

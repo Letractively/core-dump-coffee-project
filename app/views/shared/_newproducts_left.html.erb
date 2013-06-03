@@ -1,4 +1,4 @@
-<h3 class="header-title">New Products</h3>
+<h3 class="header-title"><%=(t 'newproduct')%></h3>
 <div id="gallery" class="popover-content shadow-5">
 	<% new_product(8).each do |new| %>
 	<%= link_to image_tag(new.imageurl, alt: new.name, rel: new.name), :controller => "products", :action => "show", :id => new.id %>

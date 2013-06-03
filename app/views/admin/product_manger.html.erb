@@ -1,0 +1,24 @@
+<% provide(:title, "Products of "+ current_user.email) %> 
+<div class="container">
+  <%= render 'shared/admin_menu' %>
+  <article>
+      <h2>Product managerment
+      	<div class="btn-group pull-right">
+           <a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#">
+              Post new
+             <span class="caret"></span>
+           </a>
+          <ul class="dropdown-menu">
+          <li><a href="/product/new">Product</a></li>
+          <li><a href="/category/new">Category</a></li>
+          </ul>
+        </div>
+      </h2>
+      <div class='span5'>
+      <%= form_for(@category, :url => url_for(:controller => 'admin', :action => 'product_manager')) do |f| %>
+        <%= f.select(:id, Categories.all.collect {|p| [ p.name, p.id ] } ) %>
+        <%= f.submit "Show", class: "btn btn-large btn-primary" %>
+      <% end %>
+      </div>  
+  </article>
+</div>

@@ -18,6 +18,17 @@ Venshop::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
+  config.action_mailer.delivery_method = :smtp || :sendmail || :test
+  config.action_mailer.smtp_settings = {
+      :address        => "smtp.gmail.com",
+      :port           => 587,
+      :domain         => "http://coredump.com",
+      :authentication => "plain",
+      :user_name      => "ajhbasdjg@gmail.com",
+      :password       => "lamsaoday",
+      :enable_starttls_auto => true
+    }
+
   # Raise exceptions instead of rendering exception templates
   config.action_dispatch.show_exceptions = false
 

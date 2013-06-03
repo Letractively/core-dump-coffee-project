@@ -1,4 +1,13 @@
 <% provide(:title, @cate.name) %>
+<% flash.each do |key, value| %>
+   <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+   <% end %>
+ <div class="row-fluid">
+    <div class="span3">
+      <%= render 'shared/categories' %>
+      <%= render 'shared/newproducts_left' %>
+</div>
+
 <div class="span9" style="float:right">
   <h3 class="header-title"><%= @cate.name%></h3>
   <div class="popover-content">
@@ -6,23 +15,23 @@
     <% @cate_pro.each do |item| %>
     <div class="box-product">
       <div class="brief">
-        <div class="thumb">
+        <div class="img">
           <%= link_to image_tag(item.imageurl, alt: item.name), :controller => "products", :action => "show", :id => item.id %>
         </div>
-          <%= link_to truncate(item.name, :length => 40), :controller => "products", :action => "show", :id => item.id %><br/>
     </div>
     <div align="center">
       <span class="label label-info price"><%= item.price %> <b><%= item.currency %></b></span><br/>
       <button class="btn primary details" data-tooltip="sticky<%= item.id %>"><i class="icon-zoom-in"></i></button>
       <a href="javascript:void(0)" class="btn addto" onClick="AddCart(<%= item.id %>)">Add to <i class="icon-shopping-cart"></i></a>
     </div>
-      </div>
+      <%= link_to truncate(item.name, :length => 40), :controller => "products", :action => "show", :id => item.id %><br/>
+    </div>
       <% end %>
       <% else %>
       No items in database...
       <% end %>
     </div>
-    <div style="clear:both;float:right"><%= will_paginate @cate_pro %></div>
+    <div style="clear:both;float:center"><%= will_paginate @cate_pro %></div>
   </div>
 
   <!--HTML for the tooltips-->

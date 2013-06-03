@@ -1,128 +1,104 @@
-<% provide(:title, @product.name) %>
-<div class="span9" style="float:right">
-  <h3 class="header-title">Product Detail</h3>
-  <div class="popover-content">
-    <div class="detail-brief">
-      <div class="show-img">
-        <%= image_tag(@product.imageurl, alt: @product.name) %>
+  <% provide(:title, @product.name) %> 
+  
+<% flash.each do |key, value| %>
+   <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+   <% end %>
+ <div class="row-fluid">
+    <div class="span3">
+      <%= render 'shared/categories' %>
+      <%= render 'shared/newproducts_left' %>
+</div>
+  <div class="span9" style="float:right">
+
+    <h3 class="header-title"><%=(t 'productdetail')%></h3>
+    <div class="popover-content">
+      <div class="detail-brief">
+        <div class="show-img">
+          <%= image_tag(@product.imageurl, alt: @product.name) %>
+        </div>
+        <div class="show-brief">
+          <b><%=(t 'name')%>:</b><span class="title"> <%= @product.name %></span><br/>
+          <b><%=(t 'admin.code')%>:</b> <%= @product.id %><br/>
+          <b><%=(t 'price')%>:</b> <%= @product.price %> <b><%= @product.currency %></b><br/>
+        </div>
+        <b><%=(t 'descs')%>:</b><div class="desc"> <%= @product.description %></div><br/>
       </div>
-      <div class="show-brief">
-        <b>Name:</b><span class="title"> <%= @product.name %></span><br/>
-        <b>id product:</b> <%= @product.id %><br/>
-        <b>Price:</b> <%= @product.price %> <b><%= @product.currency %></b><br/>
+      <div align="center">
+        <button class="btn btn-success" type="button" onClick="AddCart(<%= @product.id %>)"><%=(t 'addtocart')%> <i class="icon-shopping-cart"></i></button>
       </div>
-      <b>Description:</b><div class="desc"> <%= @product.description %></div><br/>
     </div>
-    <div align="center">
-      <button class="btn btn-success" type="button" onClick="AddCart(<%= @product.id %>)">Add Cart <i class="icon-shopping-cart"></i></button>
+    <div style="clear:both"></div>
+  <h4>
+  <%=(t 'feedback')%>
+  </h4>
+  <%unless @comments.count <= 0 %>
+      <table class="table table-striped">
+    <%@comments.each do |comment|%>
+     <tr>
+     <th class = "span2">
+       <%=User.find(comment.user_id).name%>
+     </th>
+     <td>
+       <%=comment.content%>
+     </td>
+   </tr>
+    <%end%>
+  </table>
+  <%else%>
+  <%=(t 'nofeedback')%>
+  <%end%>
+
+ <%= form_for(@comment, :url => url_for(:controller => 'products', :action => 'leave_comment')) do |f| %>
+
+      <div class='span8'>
+      <span class="label label-info"><%=(t "yourfeeling")%></span>
+      <%= f.text_area :content, "rows" => 5  %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <%= f.hidden_field :product_id %>
+      <%= f.hidden_field :user_id %>
+     <button type="submit" class="btn btn-info"><%=(t 'leavecomment')%></button>
     </div>
-
-
-    <!--code by Tan--------------------------------------------------------->
-
-    <!--<div style="position: relative; right: 550px; height: 50px; width: 500px">&lt;!&ndash;Begin Share like &ndash;&gt;-->
- <div style="position: absolute; left: 75px; top: 100px; width: 100px"><!--Begin Share like -->
-      <!--like facebook-->
-
-      <!--<div style="position: absolute; right: 550px; top: 370px">-->
-      <div style="position: relative">
-        <a addthis:url="http://localhost:3000/products/<%= @product.id %>" fb:like:layout="box_count" class="addthis_button_facebook_like at300b">
-          <iframe style="overflow: hidden; border: 0px none; width: 55px; height: 65px;" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fhttp://localhost:3000/products/<%= @product.id %>&amp;layout=button_count&amp;show_faces=false&amp;width=100&amp;action=like&amp;font=arial&amp;layout=box_count">
-          </iframe>
-        </a>
-      </div>
-
-      <br>
-      <!--like tweet-->
-
-      <!--<div style="position: absolute; right: 480px; top: 370px">-->
-      <div style="position: relative">
-        <a addthis:url="http://localhost:3000/products/<%= @product.id %>" tw:count="vertical" class="addthis_button_tweet at300b">
-          <iframe scrolling="no" frameborder="0" allowtransparency="true" src="http://platform.twitter.com/widgets/tweet_button.1366232305.html#_=1366426902915&amp;count=vertical&amp;counturl=http%3A%2F%2Fhttp://localhost:3000/products/<%= @product.id %>&amp;id=twitter-widget-0&amp;lang=en&amp;original_referer=http%3A%2F%2Fhttp://localhost:3000/products/<%= @product.id %>%2F&amp;size=m&amp;text=http://localhost:3000/products/<%= @product.id %>%20%7C%20Trang%20web%20t%C3%ACm%20ki%E1%BA%BFm%20vi%E1%BB%87c%20l%C3%A0m%20s%E1%BB%91%201%20t%E1%BA%A1i%20Vi%E1%BB%87t%20Nam%3A&amp;url=http%3A%2F%2Fhttp://localhost:3000/products/<%= @product.id %>%2F%23.UXIFFJ_34xU.twitter" class="twitter-share-button twitter-count-vertical" style="width: 58px; height: 62px;" title="Twitter Tweet Button" data-twttr-rendered="true">
-          </iframe>
-        </a>
-      </div>
-
-      <br>
-      <!--like google+-->
-
-      <!--<div style="position: absolute; right: 410px; top: 370px">-->
-       <div style="position: relative">
-         <script type="text/javascript">
-             (function() {
-                 var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-                 po.src = 'https://apis.google.com/js/plusone.js';
-                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-             })();
-         </script>
-         <g:plusone data-href="http://localhost:3000/" size="tall" annotation="bubble"></g:plusone>
-       </div>
-
-      <br>
-      <!--like Share-->
-
-      <!--<div style="position: absolute; right: 340px; top: 370px">-->
-      <div style="position: relative">
-        <a addthis:url="http://localhost:3000/products/<%= @product.id %>/" li:counter="top" class="addthis_button_linkedin_counter at300b">
-          <iframe scrolling="no" frameborder="0" style="width:57px; height:55px;" scrollbars="no" allowtransparency="true" role="presentation" src="//ct1.addthis.com/static/r07/linkedin020.html#href=http%3A%2F%2Fhttp://localhost:3000/products/<%= @product.id %>&amp;dr=&amp;conf=product%3Dtbx-300%26url%3Dhttp%253A%252F%252Fhttp://localhost:3000/products/<%= @product.id %>%26username%3Dundefined%26pubid%3Dundefined&amp;share=url%3Dhttp%253A%252F%252Fhttp://localhost:3000/products/<%= @product.id %>%26imp_url%3D0%26title%3Dhttp://localhost:3000/products/<%= @product.id %>%2520%257C%2520Trang%2520web%2520t%25C3%25ACm%2520ki%25E1%25BA%25BFm%2520vi%25E1%25BB%2587c%2520l%25C3%25A0m%2520s%25E1%25BB%2591%25201%2520t%25E1%25BA%25A1i%2520Vi%25E1%25BB%2587t%2520Nam%26smd%3Drsi%253D%2526rxi%253Dundefined%2526gen%253D0%2526rsc%253D%2526dr%253D%2526sta%253DAT-undefined%25252F-%25252F-%25252F5172051435420011%25252F1%26passthrough%3Dlinkedin%253Dcounter%25253Dtop&amp;li=counter%3Dtop%26height%3D55%26width%3D57">
-          </iframe>
-        </a>
-      </div>
-
-
-    </div><!--End Share like -->
-
-    <!--end code by tan--------------------------------------------------------->
-
-
-
+  <%end%>
 
   </div>
-  <div style="clear:both"></div>
-</div>
 
-<% if @other_product.count > 0 %>
-    <div class="span9" style="float:right">
-      <h3 class="header-title">Similar products</h3>
-      <div class="popover-content">
-        <% @other_product.each do |item| %>
-            <div class="box-product">
-              <div class="brief">
-                <div class="thumb">
-                  <%= link_to image_tag(item.imageurl, alt: item.name), :controller => "products", :action => "show", :id => item.id %>
-                </div>
-                <a data-tooltip="sticky230" href="#">
-                  <img width="158px" height="220px" src="" style="border:3px solid #FFF"></a>
-                <%= link_to truncate(item.name, :length => 40), :controller => "products", :action => "show", :id => item.id %><br/>
-              </div>
-              <div align="center">
-                <span class="label label-info price"><%= item.price %> <b><%= item.currency %></b></span><br/>
-                <button class="btn primary details" data-tooltip="sticky<%= item.id %>"><i class="icon-zoom-in"></i></button>
-                <a href="javascript:void(0)" class="btn addto" onClick="AddCart(<%= item.id %>)">Add to <i class="icon-shopping-cart"></i></a>
-              </div>
-            </div>
+
+  <% if @other_product.count > 0 %>
+  <div class="span9" style="float:right">
+    <h3 class="header-title">Similar products</h3>
+    <div class="popover-content">
+      <% @other_product.each do |item| %>
+      <div class="box-product">
+        <div class="brief">
+          <div class="img-polaroid">
+            <%= link_to image_tag(item.imageurl, alt: item.name), :controller => "products", :action => "show", :id => item.id %>
+          </div>
+    </div>
+       <div align="center">
+         <span class="label label-info price"><%= item.price %> <b><%= item.currency %></b></span><br/>
+          <button class="btn primary details" data-tooltip="sticky<%= item.id %>"><i class="icon-zoom-in"></i></button>
+           <a href="javascript:void(0)" class="btn addto" onClick="AddCart(<%= item.id %>)">Add to <i class="icon-shopping-cart"></i></a>
+         </div>
+        <%= link_to truncate(item.name, :length => 40), :controller => "products", :action => "show", :id => item.id %><br/>
+        </div>
         <% end %>
       </div>
       <div style="clear:both"></div>
     </div>
-<% end %>
-
-<!--HTML for the tooltips-->
-<div id="mystickytooltip" class="stickytooltip">
-  <div style="padding:5px">
-    <% if @other_product.count > 0 %>
-        <% @other_product.each do |item| %>
-
-            <div id="sticky<%= item.id %>" class="atip">
-              <%= image_tag(item.imageurl, alt: item.name)%><br/>
-              <b><%= item.name %></b><br/>
-              <b>Price: <%= item.price %> <%= item.currency %></b>
-
-            </div>
-        <% end %>
     <% end %>
 
+    <!--HTML for the tooltips-->
+  <div id="mystickytooltip" class="stickytooltip">
+    <div style="padding:5px">
+      <% if @other_product.count > 0 %>
+      <% @other_product.each do |item| %>
+      <div id="sticky<%= item.id %>" class="atip">
+        <%= image_tag(item.imageurl, alt: item.name)%><br/>
+        <b><%= item.name %></b><br/>
+        <b>Price: <%= item.price %> <%= item.currency %></b>
+      </div>
+      <% end %>
+      <% end %>
+    </div>
+    <div class="stickystatus"></div>
   </div>
-
-  <div class="stickystatus"></div>
-</div>

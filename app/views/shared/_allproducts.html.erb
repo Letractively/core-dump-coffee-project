@@ -1,4 +1,4 @@
-<h3 class="header-title">All Product</h3>
+<h3 class="header-title"><%=(t 'allproduct')%></h3>
 <div class="popover-content">
   <% if @newproducts %>
   <% @newproducts.each do |new| %>
@@ -7,13 +7,13 @@
       <div class="thumb">
         <%= link_to image_tag(new.imageurl, alt: new.name), :controller => "products", :action => "show", :id => new.id %>
       </div>
-      <%= link_to truncate(new.name, :length => 40), :controller => "products", :action => "show", :id => new.id %><br/>
     </div>
     <div align="center">
       <span class="label label-info price"><%= new.price %> <b><%= new.currency %></b></span><br/>
       <button class="btn primary details" data-tooltip="sticky<%= new.id %>"><i class="icon-zoom-in"></i></button>
-      <a href="javascript:void(0)" class="btn addto" onClick="AddCart(<%= new.id %>)">Add to <i class="icon-shopping-cart"></i></a>
+      <a href="javascript:void(0)" class="btn addto" onClick="AddCart(<%= new.id %>)"><%=(t 'addtocart')%> <i class="icon-shopping-cart"></i></a>
     </div>
+     <%= link_to truncate(new.name, :length => 40), :controller => "products", :action => "show", :id => new.id %><br/>
   </div>
   <% end %>
   <% else %>

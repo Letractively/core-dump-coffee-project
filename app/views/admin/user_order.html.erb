@@ -1,0 +1,65 @@
+<% provide(:title, (t 'admin.user')) %> 
+<%= render 'shared/admin_menu' %>
+<article>
+  <h2><%=(t 'admin.allorder')%></h2>
+  <div class="span9" >
+    <div class="popover-content">
+<div class="span9">
+<%if @order.count >0 %>
+ <table class="table table-striped table-bordered">
+   <tr>
+    <th><%=(t 'admin.code')%></th>
+    <th><%=(t 'name')%></th>
+    <th><%=(t 'phonenumber')%></th>
+    <th><%=(t 'admin.time')%></th>
+    <th><%=(t 'ordercart.total')%></th>
+    <th><%=(t 'detail')%></th>
+  </tr>
+  <% @order.each do |item| %>
+  <tr>
+    <td><%= item.id %></td>
+    <td><%= item.name %></td>
+    <td><%= item.phone %></td>
+    <td><%= item.created_at.strftime("%H:%M %d-%m-%Y") %></td>
+    <td><%= number_to_currency(item.total, :unit => "") %> $</td>
+    <td><a href="#myModal<%=item.id%>" data-toggle="modal">Click to see detail</a></td>
+  </tr>
+
+  <div id="myModal<%=item.id%>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">Order detail</h3>
+    </div>
+    <div class="modal-body">
+
+      <%order_detail = get_order_detail(item.id)%>
+      <%if order_detail %>
+      <span class='pull-left'><%="Product name"%></span>
+       <span class='pull-right'><%="Number"%></span><br/><br/>
+      <%order_detail.each do |detail|%>
+       <span class='pull-left'><%=link_to get_product_name(detail.product_id),"/products/"+detail.product_id.to_s%></span>
+       <span class='pull-right'><%=detail.qrt%></span><br/>
+      <%end%>
+      <%="----------------------------------------------------------------------------------------------------------"%> <br/>
+       <span class='pull-left'><%="Total price"%></span>
+       <span class='pull-right'><%=item.total%>$</span><br/>
+      
+    <%end%>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+
+
+
+  <% end %>
+ </table>
+ <%end%>
+ <div style="clear:both;float:center"><%= will_paginate @order %></div>
+</div>
+</div>
+</div>
+</acticle>
+

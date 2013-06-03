@@ -1,21 +1,30 @@
-<% provide(:title, 'Sign up') %>
-<div class="span9" style="float:right">
-  <h3 class="header-title">Sign Up</h3>
+<% provide(:title, (t "form.signup.title")) %>
+<div class="span9">
+  <h3 class="header-title"><%=(t "form.signup.title")%></h3> <br/>
   <div class="row">
-    <div class="span6 offset3">
+    <div class="span6">
       <%= form_for(@user) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
-      <%= f.label :email %>
+      <%= f.label :name, (t "form.signup.name") %>
+      <%= f.text_field :name %>
+
+      <%= f.label :email, (t "form.signup.email")%>
       <%= f.text_field :email %>
 
-      <%= f.label :password %>
+      <%= f.label :address, (t "form.signup.address") %>
+      <%= f.text_field :address %>
+
+      <%= f.label :phonenum, (t "form.signup.phonenumber")%>
+      <%= f.text_field :phonenum %>
+
+      <%= f.label :password, (t "form.signup.password")%>
       <%= f.password_field :password %>
 
-      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.label :password_confirmation, (t "form.signup.password_confirm") %>
       <%= f.password_field :password_confirmation %>
 
-      <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
+      <%= f.submit (t "form.signup.btn_signup"), class: "btn btn-large btn-primary" %>
       <% end %>
     </div>
   </div>

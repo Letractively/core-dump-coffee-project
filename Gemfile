@@ -10,10 +10,9 @@ gem 'json'
 gem 'rest-open-uri'
 gem 'yaml_db'
 gem 'mail'
-
-gem 'omniauth-openid'
-gem 'omniauth-google'
-gem 'omniauth-facebook'
+gem 'sunspot_rails'
+gem 'sunspot_solr'
+gem 'progress_bar' 
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

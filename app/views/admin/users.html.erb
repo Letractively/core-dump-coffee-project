@@ -1,0 +1,23 @@
+<% provide(:title, (t 'admin.user')) %> 
+<div class="container">
+  <%= render 'shared/admin_menu' %>
+  <article>
+  <h2><%=(t 'admin.user')%></h2>
+  <div class="span9" >
+    <div class="popover-content">
+      <% if @users %>
+      <% @users.each do |item| %>
+     <li>
+      <%= link_to truncate(item.name, :length => 40), :controller => "admin", :action => "user_info", :id=> item.id %>
+      <span style="padding-left:30px">
+        <%= link_to (t 'admin.btndelete'),{:controller=> "admin", :action => "user_destroy", :id => item.id },:confirm => (t 'admin.mesconfirm'), :method => :delete, style: "color:orangered" %> 
+      </span>
+     </li>
+    <% end %>
+    <%end%>
+  </div>
+  <div style="clear:both;float:right"><%= will_paginate @users %></div>
+</div>
+</article>
+
+</div>

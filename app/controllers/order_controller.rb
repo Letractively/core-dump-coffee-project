@@ -16,44 +16,57 @@ class OrderController <ApplicationController
 	end
 
 	def new
-		@order = Order.new
-		@total = 0
-		session[:cart].each do | id, quantity |
-			item = Products.find_by_id(id)
-			@total += quantity * item.price
+
+
+		unless signed_in?
+			redirect_to '/signin'
+		else
+			@order = Order.new
+			@order.name   = current_user.name
+			@order.address = current_user.address
+			@order.phone = current_user.phonenum
+			@total = 0
+			session[:cart].each do | id, quantity |
+				item = Products.find_by_id(id)
+				@total += quantity * item.price
+			end
 		end
 	end
 
 	def create
-		@order = Order.new(params[:order])
-		total = 0
-		if signed_in?
-			@order.email = current_user.email
-			cart = session[:cart]
-			cart.each do | id, quantity |
-				item = Products.find_by_id(id)
-				total += quantity * item.price
-			end
-
-			@order.total = total
-			if @order.save
-				session[:cart].each do | id, quantity |
-					item = Products.find_by_id(id)
-					@detail = OrderDetail.new(order_id: @order.id, product_id: item.id, qrt: quantity)
-					@detail.save
-				end
-				@user = current_user
-				UserMailer.checkout_email(@user, session[:cart]).deliver
-				session[:cart] = nil
-				flash[:success] = "Success! We sent mail order confirmation to you."
-				redirect_to root_path
-			else
-				render "new"
-			end
+		unless signed_in?
+			redirect_to '/signin'
 		else
-			flash[:error] = "Please login"
-			render "new"
+			@order = Order.new(params[:order])
+			total = 0
+			if signed_in?
+				@order.email = current_user.email
+				cart = session[:cart]
+				cart.each do | id, quantity |
+					item = Products.find_by_id(id)
+					total += quantity * item.price
+				end
+
+				@order.total = total
+				if @order.save
+					session[:cart].each do | id, quantity |
+						item = Products.find_by_id(id)
+						@detail = OrderDetail.new(order_id: @order.id, product_id: item.id, qrt: quantity)
+						@detail.save
+					end
+					@user = current_user
+					UserMailer.checkout_email(@user, session[:cart],@order.id.to_s).deliver
+					session[:cart] = nil
+					flash[:success] = (t 'successcheckout')
+					redirect_to root_path
+				else
+					render "new"
+				end
+			else
+				redirect_to '/signin'
+			end
 		end
 	end
+
 
 end

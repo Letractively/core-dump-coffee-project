@@ -1,19 +1,19 @@
  <% provide(:title, "Your Cart") %> 
- <div class="span9" style="float:right">
-  <h3 class="header-title">Your Cart</h3>
+ <div class="span9">
+  <h3 class="header-title"><%=(t "ordercart.title")%></h3>
   <div class="popover-content">
     <% if @cart.empty? %>
-    <p>Your Cart is empty.</p>
+    <p><%=(t "ordercart.empty")%></p>
     <% end %>
 
     <% total = 0 %>
     <table class="table cart" id="yourcart">
       <tr>
         <th></th>
-        <th>Item</th>
-        <th>Price</th>
-        <th>Qty</th>
-        <th>Total</th>
+        <th><%=(t "ordercart.item")%></th>
+        <th><%=(t "ordercart.price")%></th>
+        <th><%=(t "ordercart.quantity")%></th>
+        <th><%=(t "ordercart.total")%></th>
         <th></th>
       </tr>
 
@@ -29,10 +29,10 @@
         <td><%= number_to_currency(item.price, :unit => "") %> <%= item.currency %></td>
         <td><%= quantity %><br /></td>
         <td><b>
-          <%= number_to_currency(quantity * item.price, :unit => "") %> YJP</b>
+          <%= number_to_currency(quantity * item.price, :unit => "") %> <%=item.currency%></b>
         </td>
         <td><b>
-          <a href="javascript:void(0)" onCLick="DeleteCart(<%= item.id %>)">Delete</a></b>
+          <a href="javascript:void(0)" onCLick="DeleteCart(<%= item.id %>)"><%=(t "ordercart.btndelete")%></a></b>
         </td>
       </tr>
       <% total += quantity * item.price %>
@@ -40,17 +40,17 @@
 
       <tr>
         <td colspan="4">
-          <div class="total">Total:</div>
+          <div class="total"><%=(t "ordercart.total")%>:</div>
         </td>
         <td>
-          <div class="price"><%= number_to_currency(total, :unit => "") %> YJP</div>
+          <div class="price"><%= number_to_currency(total, :unit => "") %> $</div>
         </td>
       </tr>
     </table>
     <% if !@cart.empty? %>
     <div align="center" id="btnCheckout">
-      <a href="<%= checkout_path %>"><button class="btn btn-success" type="button">Check out</button></a>
-      <button class="btn btn-success" type="button" onClick="UnsetCart()">Delete All</button>
+      <a href="<%= checkout_path %>"><button class="btn btn-success" type="button"><%=(t "ordercart.btncheckout")%></button></a>
+      <button class="btn btn-success" type="button" onClick="UnsetCart()"><%=(t "ordercart.btndeleteall")%></button>
     </div>
     <% end %>
   </div>

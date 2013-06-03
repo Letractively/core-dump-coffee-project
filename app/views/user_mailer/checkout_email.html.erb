@@ -25,7 +25,7 @@
         <td align="right" style="color: #666699;padding: 7px 17px;border: 1px dashed #6699CC;"><%= number_to_currency(item.price, :unit => "") %> <%= item.currency %></td>
         <td align="right" style="color: #666699;padding: 7px 17px;border: 1px dashed #6699CC;"><%= quantity %><br /></td>
         <td align="right" style="color: #666699;padding: 7px 17px;border: 1px dashed #6699CC;"><b>
-          <%= number_to_currency(quantity * item.price, :unit => "") %> YJP</b>
+          <%= number_to_currency(quantity * item.price, :unit => "") %> $</b>
         </td>
       </tr>
       <% if !@total %>
@@ -37,11 +37,12 @@
       <tr>
         <td align="right" colspan="3" style="color: #666699;padding: 7px 17px;border: 1px dashed #6699CC;"><b>Total:<b></td>
         <td align="right" style="color: red;padding: 7px 17px;border: 1px dashed #6699CC;">
-          <b><%= number_to_currency(@total, :unit => "") %> YJP</b>
+          <b><%= number_to_currency(@total, :unit => "") %> $</b>
         </td>
       </tr>
     </table>
   </p>
+  Order link <%=link_to 'click to see detail', @link_detail%>
   <p>Thank you and have a great day!</p>
 </body>
 </html>
