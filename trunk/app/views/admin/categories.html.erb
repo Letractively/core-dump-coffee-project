@@ -1,0 +1,36 @@
+<% provide(:title, (t "admin.categories")) %> 
+<div class="container">
+  <%= render 'shared/admin_menu' %>
+  <article>
+    <h2><%=(t "admin.categories")%>
+     <div class="btn-group pull-right">
+       <a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#">
+        <%=(t "admin.btnpost")%>
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="/product/new"><%=(t "product")%></a></li>
+        <li><a href="/category/new"><%=(t "categories")%></a></li>
+      </ul>
+    </div>
+  </h2>
+
+  <div class="span9" >
+    <div class="popover-content">
+      <% if @category %>
+      <% @category.each do |item| %>
+     <li>
+      <%= link_to truncate(item.name, :length => 40), :controller => "admin", :action => "index", :id=> item.id %>
+      <span style="padding-left:30px">
+        <%= link_to (t "admin.btnedit"), {:controller=> "admin", :action => "category_edit", :id => item.id }, style: "color:orangered" %> | 
+        <%= link_to (t "admin.btndelete"),{:controller=> "admin", :action => "category_destroy", :id => item.id },:confirm => (t 'admin.mesconfirm'), :method => :delete, style: "color:orangered" %> 
+      </span>
+     </li>
+    <% end %>
+    <%end%>
+  </div>
+  <div style="clear:both;float:right"><%= will_paginate @category %></div>
+</div>
+</article>
+
+</div>

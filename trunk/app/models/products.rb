@@ -1,15 +1,16 @@
 class Products < ActiveRecord::Base
 
- attr_accessible :category_id, :description, :imageurl, :name, :price, :currency, :user_id
+ attr_accessible :id, :category_id, :description, :imageurl, :name, :price, :currency, :user_id
 
  validates :name, presence: true
  validates :price, presence: true
  validates :category_id, presence: true
 
- def self.search(search, page)
-  paginate :per_page => 12, :page => page,
-  :conditions => ['name like ?', "%#{search}%"], :order => 'name'
+searchable do
+    text :name, :description, :price
 end
+
+
 
 def self.uploadfile(upload)
   name =  upload['datafile'].original_filename

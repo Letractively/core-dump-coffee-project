@@ -1,0 +1,79 @@
+<% provide(:title, "Edit user") %> 
+<%= render 'shared/admin_menu' %>
+<div class="span9">
+  <h3 class="header-title"><%=(t 'admin.userinfo')%></h3>
+  <div class="popover-content">
+    <div class="row">
+      <div class="span6 offset1">
+      
+      <table class="table table-striped table-bordered">
+       <tr>
+        <th>
+          <%=(t 'form.signup.name')%>
+        </th>
+        <td>
+          <%=@user.name%>
+        </td>
+       </tr>
+       <tr>
+        <th>
+          <%=(t 'form.signup.email')%>
+        </th>
+        <td>
+          <%=@user.email%>
+        </td>
+       </tr>
+       <tr>
+        <th>
+          <%=(t 'form.signup.phonenumber')%>
+        </th>
+        <td>
+          <%=@user.phonenum%>
+        </td>
+       </tr>
+       <tr>
+        <th>
+          <%=(t 'form.signup.address')%>
+        </th>
+        <td>
+          <%=@user.address%>
+        </td>
+       </tr>
+       <tr>
+        <th>
+          <%=(t 'form.signup.role')%>
+        </th>
+        <td>
+          <%=@user.role%>
+        </td>
+       </tr>
+       <tr>
+        <th>
+          <%=(t 'form.signup.createdat')%>
+        </th>
+        <td>
+          <%=@user.created_at%>
+        </td>
+       </tr>
+       <tr>
+        <th>
+          <%=(t 'form.signup.updatedat')%>
+        </th>
+        <td>
+          <%=@user.updated_at%>
+        </td>
+       </tr>
+       <tr>
+       <th>
+          <%=(t 'admin.allorder')%>
+        </th>
+        <td>
+          <%=link_to (t 'clicktosee'), '/admin/user_order/'+@user.id.to_s%>
+        </td>
+       </tr>
+     </table>
+        
+      </div>
+    </div> 
+  </div>
+</div>

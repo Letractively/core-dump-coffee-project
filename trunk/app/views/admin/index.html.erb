@@ -1,0 +1,46 @@
+<% provide(:title, (t "admin.product")) %> 
+<div class="container">
+  <%= render 'shared/admin_menu' %>
+  <article>
+    <h2><%=(t "admin.product")%>
+     <div class="btn-group pull-right">
+       <a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#">
+        <%=(t "admin.btnpost")%>
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="/product/new"><%=(t "product")%></a></li>
+        <li><a href="/category/new"><%=(t "categories")%></a></li>
+      </ul>
+    </div>
+  </h2>
+  <div class='span5'>
+    <%= form_for(@category, :url => url_for(:controller => 'admin', :action => 'index')) do |f| %>
+    <%= f.select(:id, Categories.all.collect {|p| [ p.name, p.id ] }, :selected => @id ) %>
+    <button type="submit" class="btn"><%=(t "admin.btnshow")%></button>
+    <% end %>
+  </div>  
+  <div class="span9" >
+    <div class="popover-content">
+      <% if @products.count > 0 %>
+      <% @products.each do |item| %>
+      <div class="box-product">
+        <div class="brief">
+          <div class="thumb" data-tooltip="sticky<%= item.id %>">
+            <%= link_to image_tag(item.imageurl, alt: item.name), :controller => "products", :action => "show", :id => item.id %>
+          </div>
+        </div>
+        <%= link_to truncate(item.name, :length => 40), :controller => "products", :action => "show", :id => item.id %><br/>
+        <h2><%= item.price %> <b><%= item.currency %></b></h2><br/>
+        <div align="center">
+          <%= link_to (t "admin.btnedit"), {:controller=> "admin", :action => "product_edit", :id => item.id }, style: "color:orangered" %> | 
+          <%= link_to (t "admin.btndelete"),{:controller=> "admin", :action => "product_destroy", :id => item.id },:confirm => (t "admin.mesconfirm"), :method => :delete, style: "color:orangered" %> 
+        </div>
+      </div>
+      <% end %>
+      <%end%>
+    </div>
+    <div style="clear:both;float:right"><%= will_paginate @products %></div>
+  </div>
+</article>
+</div>

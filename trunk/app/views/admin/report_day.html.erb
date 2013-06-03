@@ -1,0 +1,131 @@
+<% provide(:title, (t 'report')) %> 
+<article>
+  <%= render 'shared/admin_menu' %>
+  <h2><%=(t "admin.reporttitle")%></h2>
+  <form id='report' action='/admin/report_month' method='GET'>
+    <select name="year" id="year" class="span2">
+      <option value=""><%=(t 'admin.chooseyear')%></option>
+      <%
+      present = Time.new.year
+      (2013..(present+10)).each do |e|
+        %>
+        <option value="<%=e%>" <% if @year.to_s == e.to_s %>selected="selected"<% end %>> <%=e%>
+          <% end %>
+        </select>
+        <select name="month" id="month" class="span2">
+          <option value=""><%= (t 'admin.choosemonth') %></option>
+          <% (1..12).each do |e| %>
+          <option value="<%=e%>" <% if @month.to_s == e.to_s %>selected="selected"<% end %>>
+            <%=e%>
+          </option>
+          <% end %>
+        </select>
+        <br/>
+        <button class="btn btn-primary"><%= (t 'admin.btnshow') %></button>
+      </form>
+    </article>
+    <div class="span1 pull-left">
+      <% if @year!=0 && @month!=0 %>
+      <table class="table table-striped table-bordered">
+        <tr>
+          <th class="span1">
+           <b><%=(t 'admin.day')%></b>
+         </th>
+         <td >
+          <b><%=(t 'admin.order')%></b>
+        </td>
+      </tr>
+      <%@report_day.each_with_index do |day, index |%>
+      <tr>
+        <th class="span1">
+          <%=link_to index+1, '/admin/report_day?year='+@year.to_s+'&month='+@month.to_s+'&day='+(index+1).to_s%>
+        </th>
+        <td >
+          <%=link_to day,'/admin/report_day?year='+@year.to_s+'&month='+@month.to_s+'&day='+(index+1).to_s%>
+        </td>
+      </tr>
+      <%end%>
+    </table>
+    <%end%>
+  </div>
+  <div class="span10 pull-right">
+    <% if @year!=0 && @month!=0 && @day!=0 && @report_day[@day-1]>0%>
+    <h2><%=(t 'report')%> <%=@day%>-<%=@month%>-<%=@year%></h2>
+    <table class="table table-striped table-bordered pull-right">
+      <tr>
+        <th class="span1">
+         <b><%=(t 'admin.code')%></b>
+       </th>
+       <td >
+        <b><%=(t 'name')%></b>
+      </td>
+      <td >
+        <b><%=(t 'address')%></b>
+      </td>
+      <td >
+        <b><%=(t 'phonenumber')%></b>
+      </td>
+      <td >
+        <b><%=(t 'ordercart.total')%></b>
+      </td>
+      <td >
+        <b><%=(t 'detail')%></b>
+      </td>
+    </tr>
+    <%@day_order.each do |order|%>
+    <tr>
+      <th class="span1">
+       <%=order.id%>
+     </th>
+     <td >
+       <%=link_to order.name, '/admin/user_info/'+ User.where(email: order.email).first.id.to_s%>
+     </td>
+     <td >
+       <%=order.address%>
+     </td>
+     <td >
+       <%=order.phone%>
+     </td>
+     <td >
+       <%=order.total%><%=" $"%>
+     </td>
+     <td >
+      <a href="#myModal<%=order.id%>" data-toggle="modal"><%=(t 'clicktosee')%></a>
+    </td>
+  </tr>
+
+  <div id="myModal<%=order.id%>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel"><%=(t 'admin.orderdetail')%></h3>
+    </div>
+    <div class="modal-body">
+
+      <%order_detail = get_order_detail(order.id)%>
+      <%if order_detail %>
+      <span class='pull-left'><%=(t 'product')%></span>
+       <span class='pull-right'><%=(t 'admin.number')%></span><br/><br/>
+      <%order_detail.each do |detail|%>
+       <span class='pull-left'><%=link_to get_product_name(detail.product_id),"/products/"+detail.product_id.to_s%></span>
+       <span class='pull-right'><%=detail.qrt%></span><br/>
+      <%end%>
+      <%="----------------------------------------------------------------------------------------------------------"%> <br/>
+       <span class='pull-left'><%=(t 'ordercart.total')%></span>
+       <span class='pull-right'><%=order.total%>$</span><br/>
+      
+    <%end%>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true"><%=(t 'btnclose')%></button>
+  </div>
+</div>
+
+
+<%end%>
+</table>
+<%end%>
+</div>
+
+
+

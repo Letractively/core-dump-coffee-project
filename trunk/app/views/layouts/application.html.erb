@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= full_title(yield(:title)) %></title>
+  <title><%= full_title(yield(:title))%></title>
   <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
   <%= render 'layouts/shim' %>
   <%= render 'shared/javascript' %>
-  
+  <style>
+    body {
+       background-image:url('/images/wall7.jpg'); 
+      }
+  </style>
 </head>
 <body>
   <%= render 'layouts/header' %>
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_floating_style addthis_counter_style" style="left:50px;top:100px;">
+<a class="addthis_button_facebook_like" fb:like:layout="box_count"></a>
+<a class="addthis_button_tweet" tw:count="vertical"></a>
+<a class="addthis_button_google_plusone" g:plusone:size="tall"></a>
+<a class="addthis_counter"></a>
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5172a6ed5491aea1"></script>
+<!-- AddThis Button END -->
+
   <div class="container">
-   <% flash.each do |key, value| %>
-   <%= content_tag(:div, value, class: "alert alert-#{key}") %>
-   <% end %>
-   <div class="row-fluid">
-    <div class="span3">
-      <%= render 'shared/categories' %>
-      <%= render 'shared/newproducts_left' %>
-    </div>
     <%= yield %>
   </div>
   <%= render 'layouts/footer' %>

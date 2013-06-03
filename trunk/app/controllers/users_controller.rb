@@ -17,6 +17,7 @@ class UsersController <ApplicationController
 
 	def create
 		@user = User.new(params[:user])
+		@user.create_remember_token()
 		if @user.save
 			redirect_to @user
 		else
@@ -34,7 +35,7 @@ class UsersController <ApplicationController
 	end
 
 	def update
-		if @user.update_attributes(params[:user])
+		if @user.update_attributes(params[:user],:remember_token =>  SecureRandom.urlsafe_base64)
 			flash[:success] = "Update Success!"
 			sign_in @user
 			redirect_to @user

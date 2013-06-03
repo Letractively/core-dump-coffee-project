@@ -1,0 +1,23 @@
+<div class="row-fluid">
+    <% if flash[:notice_email_request]%>
+    <div class="alert alert-error" style = "height:40px">
+        <%= flash[:notice_email_request]%>
+    </div>
+    <% end %>
+</div>
+<div class="row-fluid">
+        <div>
+            <%=(t 'remind.mess1')%>
+        </div>
+        <br/>
+    <div>
+
+
+<%= form_for(:session, :url => url_for(:controller => 'sessions', :action => 'send_token')) do |f| %>
+    <%= f.label :email %>
+    <%= f.text_field :email, :class => "span4" %><br/>
+    <%= f.submit (t 'remind.btnremind'), class: "btn btn-large btn-danger" %>
+ <% end %>
+
+</div>
+</div>

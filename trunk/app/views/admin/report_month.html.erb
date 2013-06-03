@@ -1,0 +1,88 @@
+<% provide(:title, (t 'report')) %> 
+<article>
+  <%= render 'shared/admin_menu' %>
+  <h2><%=(t "admin.reporttitle")%></h2>
+  <form id='report' action='/admin/report_month' method='GET'>
+    <select name="year" id="year" class="span2">
+      <option value=""><%=(t 'admin.chooseyear')%></option>
+      <%
+      present = Time.new.year
+      (2013..(present+10)).each do |e|
+        %>
+        <option value="<%=e%>" <% if @year.to_s == e.to_s %>selected="selected"<% end %>> <%=e%>
+          <% end %>
+        </select>
+        <select name="month" id="month" class="span2">
+          <option value=""><%= (t 'admin.choosemonth') %></option>
+          <% (1..12).each do |e| %>
+          <option value="<%=e%>" <% if @month.to_s == e.to_s %>selected="selected"<% end %>>
+            <%=e%>
+          </option>
+          <% end %>
+        </select>
+        <br/>
+        <button class="btn btn-primary"><%= (t 'admin.btnshow') %></button>
+      </form>
+    </article>
+    <div class="span1 pull-left">
+      <% if @year!=0 && @month!=0 %>
+      <table class="table table-striped table-bordered">
+        <tr>
+          <th class="span1">
+           <b><%=(t 'admin.day')%></b>
+         </th>
+         <td >
+          <b><%=(t 'admin.order')%></b>
+        </td>
+      </tr>
+      <%@report_day.each_with_index do |day, index |%>
+      <tr>
+        <th class="span1">
+          <%=link_to index+1, '/admin/report_day?year='+@year.to_s+'&month='+@month.to_s+'&day='+(index+1).to_s%>
+        </th>
+        <td >
+          <%=link_to day,'/admin/report_day?year='+@year.to_s+'&month='+@month.to_s+'&day='+(index+1).to_s%>
+        </td>
+      </tr>
+      <%end%>
+    </table>
+    <%end%>
+  </div>
+  <% if @year!=0 && @month!=0 %>
+  <div class="pull-right">
+    <div id="chart_div" style="width: 800px; height: 500px;"></div>
+  </div>
+  <%end%>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+  google.load("visualization", "1", {packages:["corechart"]});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+    data_temp = $("#value_chart").val();
+    title_tmp = $("#charttitle").val();
+    unit_tmp = $("#chartunit").val();
+    data_temp = data_temp.substr(1);
+    data_temp = data_temp.substring(0, data_temp.length - 1);
+    data_arr = data_temp.split(",");
+    var data = google.visualization.arrayToDataTable([
+      ['Day',  unit_tmp],
+      ['1',      parseInt(data_arr[0],10)]
+      ]);
+    for (var i=1;i<data_arr.length;i++){ 
+      data.addRows([
+        [ String(i+1) , parseInt(data_arr[i],10)]
+        ]);
+    }
+
+    var options = {
+      title: title_tmp
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+  </script>
+  <input type="hidden" id="value_chart" value="<%=@report_day%>"/>
+  <input type="hidden" id="charttitle" value="<%=(t 'admin.charttitle')%>"/>
+  <input type="hidden" id="chartunit" value="<%=(t 'admin.chartunit')%>"/>
+

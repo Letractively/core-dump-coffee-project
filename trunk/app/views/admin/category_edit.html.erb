@@ -1,0 +1,24 @@
+<% provide(:title, "Edit category") %> 
+<%= render 'shared/admin_menu' %>
+<div class="span9">
+  <h3 class="header-title"><%=(t "admin.editcategory")%></h3>
+  <div class="popover-content">
+    <div class="row">
+      <div class="span6 ">
+        <%= form_for(@category, :url => url_for(:controller => 'admin', :action => 'category_save')) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+        
+        <%= f.hidden_field :id %>
+        <%= f.label :name, (t "name") %>
+        <%= f.text_field :name , {placeholder: "Coffe"} %>
+
+        <%= f.label :description, (t "desc")%>
+        <%= f.text_area :description, "cols" => 20, "rows" => 10 %>
+
+        <%= f.submit (t "savechange"), class: "btn btn-large btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div style="clear:both"></div>
+</div>

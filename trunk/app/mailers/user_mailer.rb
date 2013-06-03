@@ -1,27 +1,22 @@
-require 'mail'
 class UserMailer < ActionMailer::Base
-  default :from => 'admin@venshop.com'
+  default :from => "ajhbasdjg@gmail.com"
  
-  def checkout_email(user, order)
+  def checkout_email(user, order, id)
     @user = user
     @order = order
+    @link_detail = 'http://0.0.0.0:3000/order/'+id
     @url  = "http://localhost:3000"
-    mail(:to => user.email, :subject => "Received your order from localhost")
+    mail(:to => user.email,
+      :subject => 'Order detail')
   end
 
-  def send_mail(to,subject,body,addfile)
-    Mail.deliver do
-      from    :from
-      to      to
-      subject subject
-      body    body
-      add_file addfile if addfile
-    end
-  end
 
-  def welcome(to)
-     @url = 'http://localhost:3000'
-     @to = to
-     mail(:to => @to, :subject => 'Welcome to Venshop')
-  end
+  def send_mail_resetpassword(user, link)
+    @user = user
+    @link = link
+    mail(:to => @user,
+      :subject => 'Reset your password')
+  end  
+
+
 end

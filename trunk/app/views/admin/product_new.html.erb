@@ -1,0 +1,33 @@
+<% provide(:title, (t 'admin.postproduct')) %> 
+<%= render 'shared/admin_menu' %>
+<div class="span9">
+  <h3><%=(t 'admin.postproduct')%></h3>
+  <div class="popover-content">
+    <div class="row">
+      <div class="span6 ">
+        <%= form_for(@product, :url => url_for(:controller => 'admin', :action => 'product_create')) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+
+        <%= f.label :Name, (t 'name') %>
+        <%= f.text_field :name , {placeholder: "Coffe bean"} %>
+
+        <%= f.label :Categories,(t 'categories') %>
+        <%= f.select(:category_id, 
+        Categories.all.collect {|p| [ p.name, p.id ] } ) %>
+        <%= f.label :Price, (t 'Price') %>
+        <%= f.text_field :price, {:style => "width:80%", :class => "number", :placeholder => "Only number"} %>
+        <select name="products[currency]" style="padding:5px; width:18%;margin-bottom:10px;">
+          <option value="$"> $</option>
+        </select>
+        <%= f.label :Image, (t 'imageurl') %>
+        <%= f.text_field :imageurl, {:placeholder => "Url to image"} %>
+        <%= f.label :description,(t 'desc')%>
+        <%= f.text_area :description, "cols" => 20, "rows" => 10 %>
+
+        <%= f.submit (t 'admin.btncreate'), class: "btn btn-large btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div style="clear:both"></div>
+</div>

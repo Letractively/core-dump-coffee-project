@@ -1,23 +1,24 @@
-<% provide(:title, "Checkout") %> 
-<div class="span9" style="float:right">
-  <h3 class="header-title">Checkout</h3>
+<% provide(:title, (t 'checkout')) %> 
+<div class="span9">
+  <h3 class="header-title"><%=(t 'checkout')%></h3>
   <div class="popover-content">
     <div class="row">
-      <div class="span6 offset3">
-        The total value of your order is: <span style="color:red"><b><%= number_to_currency(@total, :unit => "") %> YJP</b></span>
+      <div class="span6 offset1">
+        <%=(t 'ordercart.mess1')%>: <span style="color:red"><b><%= number_to_currency(@total, :unit => "") %> $</b></span>
+        <p><%=(t 'ordercart.mess2')%></p>
         <%= form_for(@order, :url => url_for(:controller => 'order', :action => 'create')) do |f| %>
         <%= render 'shared/error_messages', object: f.object %>
 
-        <%= f.label :Name %>
+        <%= f.label :Name,(t 'name') %>
         <%= f.text_field :name %>
 
-        <%= f.label :Phone %>
+        <%= f.label :Phone, (t 'phonenumber')%>
         <%= f.text_field :phone %>
 
-        <%= f.label :Address %>
+        <%= f.label :Address,(t 'address') %>
         <%= f.text_field :address %>
 
-        <%= f.submit "Accep", class: "btn btn-large btn-primary" %>
+        <%= f.submit (t 'ordercart.btnprocess'), class: "btn btn-large btn-primary" %>
         <% end %>
       </div>
     </div>
